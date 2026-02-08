@@ -1,1 +1,227 @@
 # love-quiz
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How Well Do You Know Us? 💖</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffd6e8, #ffeef5);
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #ff4d88;
+    }
+
+    .quiz-box {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      max-width: 420px;
+      margin: auto;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      animation: pop 0.5s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 15px;
+      background: #ffb6c1;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #ff4d88;
+      color: white;
+    }
+
+    .footer {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>How Well Do You Know Us? 💕</h2>
+
+  <div class="quiz-box" id="quizBox">
+    <h3 id="question"></h3>
+    <div id="answers"></div>
+  </div>
+
+  <div class="footer">Made with ❤️ just for you</div>
+
+  <script>
+    const quiz = [
+      {
+        question: "Where did we first meet?",
+        answers: [
+          "At a café ☕",
+          "On a bus station  🚌❤️",
+          "At school",
+          "In my dreams 😌"
+        ],
+        correct: 1
+      },
+      {
+        question: "What was the moment I knew it was you?",
+        answers: [
+          "After our first call",
+          "When you made me laugh",
+          "The moment I saw you 👀❤️",
+          "I still pretend I don’t know 😏"
+        ],
+        correct: 2
+      },
+      {
+        question: "What’s your secret personality?",
+        answers: [
+          "Very serious 😐",
+          "Calm and quiet",
+          "Childish and cute 🧸",
+          "An innocent angel (lying detected 😆)"
+        ],
+        correct: 2
+      },
+      {
+        question: "What do you randomly do that still surprises me?",
+        answers: [
+          "Steal my food 🍟",
+          "Disappear mid-chat",
+          "Put your fingers in my mouth instead of kissing them 😭😂",
+          "Act normal (never happened)"
+        ],
+        correct: 2
+      },
+      {
+        question: "Our favorite time together?",
+        answers: [
+          "Morning",
+          "Afternoon",
+          "Late night calls 🌙📞",
+          "Any time you’re annoying me 😏"
+        ],
+        correct: 2
+      },
+      {
+        question: "What’s my favorite nickname for you?",
+        answers: [
+          "Princess 👑",
+          "Katkouta 🐥❤️",
+          "Boss",
+          "Hey you 😐"
+        ],
+        correct: 1
+      },
+      {
+        question: "Who fell in love first?",
+        answers: [
+          "You 😌",
+          "Me 😏",
+          "Both at the same time",
+          "Still under investigation 🔍❤️"
+        ],
+        correct: 3
+      },
+      {
+        question: "What happens even when we’re tired?",
+        answers: [
+          "We stop talking",
+          "We argue",
+          "We still call each other 📞❤️",
+          "We pretend to sleep but don’t"
+        ],
+        correct: 2
+      },
+      {
+        question: "What are you really good at?",
+        answers: [
+          "Being dramatic 🎭",
+          "Being cute without trying 💕",
+          "Making me miss you",
+          "All of the above 😌"
+        ],
+        correct: 3
+      },
+      {
+        question: "No matter your score… what are you to me?",
+        answers: [
+          "My favorite person ❤️",
+          "My safe place",
+          "My Katkouta 🐥",
+          "All of the above forever 💖"
+        ],
+        correct: 3
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const quizBox = document.getElementById("quizBox");
+
+    function showQuestion() {
+      answersEl.innerHTML = "";
+      questionEl.innerText = quiz[current].question;
+
+      quiz[current].answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.innerText = answer;
+        btn.onclick = () => selectAnswer(index);
+        answersEl.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(index) {
+      if (index === quiz[current].correct) score++;
+      current++;
+
+      if (current < quiz.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      let message = "";
+      if (score >= 8) {
+        message = "Perfect 😭❤️ You know us too well, Katkouta. I choose you every time.";
+      } else if (score >= 5) {
+        message = "Not bad 😏💕 Even when you miss some… you never miss my heart.";
+      } else {
+        message = "Okay 😆❤️ We clearly need more late night calls.";
+      }
+
+      quizBox.innerHTML = `
+        <h2>Your Score: ${score}/${quiz.length}</h2>
+        <p style="font-size:18px">${message}</p>
+        <p style="margin-top:15px">No matter what… you’re my favorite ❤️</p>
+      `;
+    }
+
+    showQuestion();
+  </script>
+
+</body>
+</html>
